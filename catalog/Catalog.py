@@ -15,7 +15,7 @@ def gen_catalog(prestring):
 	        continue
 	    if line[0] == "@":
 	        smaller_length = min(len(prestring), len(curr["PSRJ"][0]))
-	        if smaller_length == 0 or prestring[0:smaller_length] == curr["PSRJ"][0][0:smaller_length]:
+	        if (smaller_length == 0 or prestring[0:smaller_length] == curr["PSRJ"][0][0:smaller_length]) and ("RAJ" in curr.keys()):  #temp fix, will want to convert ecliptic coords to raj and decj
 	        	entries.append(curr)
 	        curr = None
 	        line = file.readline()
