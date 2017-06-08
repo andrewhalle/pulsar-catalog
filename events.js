@@ -13,20 +13,26 @@ function setup() {
 
 function setHTML(result) {
 	catalog = JSON.parse(result);
+	catalog.entries_per_page = 10;
+	catalog.pages = Math.ceil(catalog.entries.length / catalog.entries_per_page);
+	catalog.curr_page = 1;
 	render(catalog);
 }
 
 function filter() {
 	var prestring = $("#search").val();
+	var numVisible = 0;
 	for (var i = 0; i < catalog.entries.length; i++) {
 		var curr = catalog.entries[i];
 		var smaller = Math.min(prestring.length, curr.PSRJ[0].length);
 		if (curr.PSRJ[0].slice(0, smaller) == prestring.slice(0, smaller)) {
 			curr.visible = true;
+			numVisible += 1;
 		} else {
 			curr.visible = false;
 		}
 	}
+	catalog.pages = Math.ceil(numVisible / catalog.entries_per_page);
 	render(catalog);
 }
 
@@ -62,4 +68,5 @@ function render(catalog) {
 	}
 	table += "</table>";
 	$("#table").html(table);
+	$("#pageinfo").html(catalog.curr_page.toString() + " of " + catalog.pages.toString());
 }

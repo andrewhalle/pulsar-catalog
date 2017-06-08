@@ -27,10 +27,6 @@ def gen_catalog():
 	    curr[row[0]] = row[1:len(row)]
 	    line = file.readline()
 
-	catalog["entries_per_page"] = 10 #to be selectable
-	catalog["pages"] = math.ceil(len(catalog["entries"]) / catalog["entries_per_page"])
-	catalog["curr_page"] = 1
-
 	return catalog
 
 cat = gen_catalog()
