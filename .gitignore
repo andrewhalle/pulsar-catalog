@@ -1,2 +1,3 @@
 catalog/*.pyc
 catalog/__pycache__
+catalog/*.cat
