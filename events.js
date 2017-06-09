@@ -33,17 +33,22 @@ function filter() {
 		}
 	}
 	catalog.pages = Math.ceil(numVisible / catalog.entries_per_page);
+	catalog.curr_page = 1;
 	render(catalog);
 }
 
 function next() {
-	catalog.curr_page += 1;
-	render(catalog);
+	if (catalog.curr_page != catalog.pages) {
+		catalog.curr_page += 1;
+		render(catalog);
+	}
 }
 
 function prev() {
-	catalog.curr_page -= 1;
-	render(catalog);
+	if (catalog.curr_page != 1) {
+		catalog.curr_page -= 1;
+		render(catalog);
+	}
 }
 
 function render(catalog) {
