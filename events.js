@@ -52,7 +52,7 @@ function prev() {
 }
 
 function render(catalog) {
-	var table = "<table><tr><th>JName</th><th>RAJ</th><th>DECJ</th></tr>";
+    var table = '<table style="padding: 0px;margin 2vh 5vw 0px 5vw; width: 90vw; text-align: center"><tr><th>JName</th><th>RAJ</th><th>DECJ</th></tr>';
 	var start_buffer = (catalog.curr_page - 1) * catalog.entries_per_page;
 	var entries_left = catalog.entries_per_page;
 	var i = 0;

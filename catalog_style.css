@@ -1,0 +1,44 @@
+#title {
+    margin: 2vh 0px 0px 0px;
+    width: 100vw;
+    text-align: center;
+}
+
+#search {
+    padding: 0px;
+    margin: 2vh 5vw 0px 5vw;
+    width: 90vw;
+}
+
+#table {
+    border: 1px solid grey;
+    padding: 0px;
+    margin: 2vh 5vw 0px 5vw;
+    width: 90vw;
+    height: 30vh;
+    font-size: 1.8vh;
+}
+
+#nav {
+    padding: 0px;
+    margin: 2vh 5vw 0px 5vw;
+    width: 90vw;
+}
+
+#prev {
+    padding: 0px;
+    margin: 0px 1vw 0px 37.5vw;
+    width: 5vw;
+}
+
+#next {
+    padding: 0px;
+    margin: 0px 0px 0px 1vw;
+    width: 5vw;
+}
+
+#pageinfo {
+    padding: 0px;
+    margin: 0px;
+    width: 5vw;
+}

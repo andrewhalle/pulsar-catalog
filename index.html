@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Aggregate Pulsar Catalog</title>
+  <title>Aggregate Pulsar Catalog</title>
+  <link rel="stylesheet" type="text/css" href="catalog_style.css">
 </head>
 <body>
-	<h1>Aggregate Pulsar Catalog</h1>
-	<input id="search" placeholder="Name" type="text">
-	<div id="table"></div>
-	<input id="prev" type="button" value="Previous">
-	<div id="pageinfo"></div>
-	<input id="next" type="button" value="Next">
-	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-	<script src="events.js"></script>
+  <h1 id="title">Aggregate Pulsar Catalog</h1>
+  <input id="search" placeholder="Name" type="text">
+  <div id="table"></div>
+  <div id="nav">
+    <input id="prev" type="button" value="Previous">
+    <span id="pageinfo"></span>
+    <input id="next" type="button" value="Next">
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src="events.js"></script>
 </body>
 </html>
