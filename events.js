@@ -16,7 +16,7 @@ function setHTML(result) {
 	catalog.entries_per_page = 10;
 	catalog.pages = Math.ceil(catalog.entries.length / catalog.entries_per_page);
 	catalog.curr_page = 1;
-	render(catalog);
+	filter();
 }
 
 function filter() {
@@ -66,7 +66,7 @@ function render(catalog) {
 	while (entries_left > 0 && i < catalog.entries.length) {
 		var curr = catalog.entries[i];
 		if (curr.visible) {
-			table += "<tr><td>" + curr.PSRJ[0] + "</td><td>" + curr.RAJ[0] + "</td><td>" + curr.DECJ[0] + "</td></tr>";
+			table += "<tr><td><a href=catalog/entries/" + curr.PSRJ[0] + ".html>" + curr.PSRJ[0] + "</a></td><td>" + curr.RAJ[0] + "</td><td>" + curr.DECJ[0] + "</td></tr>";
 			entries_left -= 1;
 		}
 		i += 1;

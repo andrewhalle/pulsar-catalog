@@ -1,5 +1,3 @@
-import json
-import math
 from collections import OrderedDict
 
 def gen_catalog():
@@ -28,6 +26,3 @@ def gen_catalog():
 	    line = file.readline()
 
 	return catalog
-
-cat = gen_catalog()
-print(json.dumps(cat))

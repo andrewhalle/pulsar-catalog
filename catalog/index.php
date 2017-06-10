@@ -1,3 +1,3 @@
 <?php
-system("python Catalog.py");
+system("python initialize.py");
 ?>
