@@ -28,7 +28,7 @@ def gen_catalog():
 	file.close()
 
 
-	# #RRATalog
+	#RRATalog
 	file = open("rratalog.txt", "r")
 	line = file.readline()
 	line = file.readline()
@@ -57,6 +57,51 @@ def gen_catalog():
 			catalog["entries"].append({"PSRJ":curr["Name"], "RAJ":curr["RA"], "DECJ":curr["DEC"], "visible":True, "sources":{"RRATalog":curr}})
 		line = file.readline()
 	file.close()
+
+	#Parallaxes
+	file = open("Parallaxes.txt", "r")
+	line = file.readline()
+	curr = None
+	while line:
+		if line[0] == "#":
+			line = file.readline()
+			continue
+		elif line[0] == "!":
+			if curr == None:
+				curr = OrderedDict()
+				line = file.readline()
+			else:
+				if curr["JName"] in [x["PSRJ"] for x in catalog["entries"]]:
+					entry = [x for x in catalog["entries"] if x["PSRJ"] == curr["JName"]][0]
+					entry["sources"]["Parallaxes"] = curr
+				else:
+					catalog["entries"].append({"PSRJ":curr["JName"], "RAJ":"--", "DECJ":"--", "visible":True, "sources":{"Parallaxes":curr}})
+				line = file.readline()
+
+		else:
+			if line[0:5] == "JName":
+				line = line.split(" = ")
+				curr["JName"] = line[1].strip()
+				line = file.readline()
+				line = line.split(" = ")
+				if len(line) == 1:
+					curr["BName"] = "--"
+				else:
+					curr["BName"] = line[1].strip()
+				curr["PIs"] = OrderedDict()
+				line = file.readline()
+			else:
+				line = line.split(" = ")
+				currPI = line[1].strip()
+				curr["PIs"][currPI] = OrderedDict()
+				line = file.readline()
+				while line[0] != "#" and line[0:2] != "PI":
+					line = line.split(" = ")
+					curr["PIs"][currPI][line[0]] = line[1].strip()
+					line = file.readline()
+
+
+	#GCpsr
 
 	catalog["entries"].sort(key=lambda x: x["PSRJ"])
 	return catalog
