@@ -24,8 +24,8 @@ function filter() {
 	var numVisible = 0;
 	for (var i = 0; i < catalog.entries.length; i++) {
 		var curr = catalog.entries[i];
-		var smaller = Math.min(prestring.length, curr.PSRJ.length);
-		if (curr.PSRJ.slice(0, smaller) == prestring.slice(0, smaller)) {
+		var smaller = Math.min(prestring.length, curr.Name.length);
+		if (curr.Name.slice(0, smaller) == prestring.slice(0, smaller)) {
 			curr.visible = true;
 			numVisible += 1;
 		} else {
@@ -52,21 +52,22 @@ function prev() {
 }
 
 function render(catalog) {
-    var table = '<table style="padding: 0px;margin 2vh 5vw 0px 5vw; width: 90vw; text-align: center"><tr><th>JName</th><th>RAJ</th><th>DECJ</th><th>Sources</th></tr>';
+    var table = '<table style="padding: 0px;margin 2vh 5vw 0px 5vw; width: 90vw; text-align: center"><tr><th>Name</th><th>RA</th><th>DEC</th><th>Sources</th></tr>';
 	var start_buffer = (catalog.curr_page - 1) * catalog.entries_per_page;
 	var entries_left = catalog.entries_per_page;
 	var i = 0;
+	var curr;
 	while (start_buffer > 0 && i < catalog.entries.length) {
-		var curr = catalog.entries[i];
+		curr = catalog.entries[i];
 		if (curr.visible) {
 			start_buffer -= 1;
 		}
 		i += 1;
 	}
 	while (entries_left > 0 && i < catalog.entries.length) {
-		var curr = catalog.entries[i];
+		curr = catalog.entries[i];
 		if (curr.visible) {
-			table += "<tr><td><a href=catalog/entries/" + curr.PSRJ + ".html>" + curr.PSRJ + "</a></td><td>" + curr.RAJ + "</td><td>" + curr.DECJ + "</td><td>" + Object.keys(curr.sources).toString() + "</td></tr>";
+			table += "<tr><td><a href=catalog/entries/" + curr.Name.replace("/", "-") + ".html>" + curr.Name + "</a></td><td>" + curr.RA + "</td><td>" + curr.DEC + "</td><td>" + Object.keys(curr.sources).toString() + "</td></tr>";
 			entries_left -= 1;
 		}
 		i += 1;

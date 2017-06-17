@@ -15,7 +15,7 @@ def gen_catalog():
 	        continue
 	    if line[0] == "@":
 	        if "RAJ" in curr.keys():  #temp fix, will want to convert ecliptic coords to raj and decj
-	        	new_curr = {"PSRJ":curr["PSRJ"][0], "RAJ":curr["RAJ"][0], "DECJ":curr["DECJ"][0], "visible": True, "sources": {"ATNF":curr}}
+	        	new_curr = {"Name":curr["PSRJ"][0], "RA":curr["RAJ"][0], "DEC":curr["DECJ"][0], "visible": True, "sources": {"ATNF":curr}}
 	        	entries.append(new_curr)
 	        curr = None
 	        line = file.readline()
@@ -50,11 +50,11 @@ def gen_catalog():
 		curr["FluxD"] = line[12]
 		curr["Pulse Width"] = line[13]
 		curr["Survey"] = line[14]
-		if curr["Name"] in [x["PSRJ"] for x in catalog["entries"]]:
-			entry = [x for x in catalog["entries"] if x["PSRJ"] == curr["Name"]][0]
+		if curr["Name"] in [x["Name"] for x in catalog["entries"]]:
+			entry = [x for x in catalog["entries"] if x["Name"] == curr["Name"]][0]
 			entry["sources"]["RRATalog"] = curr
 		else:
-			catalog["entries"].append({"PSRJ":curr["Name"], "RAJ":curr["RA"], "DECJ":curr["DEC"], "visible":True, "sources":{"RRATalog":curr}})
+			catalog["entries"].append({"Name":curr["Name"], "RA":curr["RA"], "DEC":curr["DEC"], "visible":True, "sources":{"RRATalog":curr}})
 		line = file.readline()
 	file.close()
 
@@ -71,11 +71,11 @@ def gen_catalog():
 				curr = OrderedDict()
 				line = file.readline()
 			else:
-				if curr["JName"] in [x["PSRJ"] for x in catalog["entries"]]:
-					entry = [x for x in catalog["entries"] if x["PSRJ"] == curr["JName"]][0]
+				if curr["JName"] in [x["Name"] for x in catalog["entries"]]:
+					entry = [x for x in catalog["entries"] if x["Name"] == curr["JName"]][0]
 					entry["sources"]["Parallaxes"] = curr
 				else:
-					catalog["entries"].append({"PSRJ":curr["JName"], "RAJ":"--", "DECJ":"--", "visible":True, "sources":{"Parallaxes":curr}})
+					catalog["entries"].append({"Name":curr["JName"], "RA":"--", "DEC":"--", "visible":True, "sources":{"Parallaxes":curr}})
 				line = file.readline()
 
 		else:
@@ -99,9 +99,42 @@ def gen_catalog():
 					line = line.split(" = ")
 					curr["PIs"][currPI][line[0]] = line[1].strip()
 					line = file.readline()
+	file.close()
 
 
 	#GCpsr
+	file = open("GCpsr.txt", "r")
+	line = file.readline()
+	currGC = None
+	while line:
+		if line[0] == "#" or line == "\n":
+			line = file.readline()
+			continue
+		elif line[0] == "J" or line[0] == "B":
+			line = line.split()
+			curr = OrderedDict()
+			curr["Name"] = line[0]
+			curr["Offset"] = line[1]
+			curr["Period"] = line[2]
+			curr["dP/dt"] = line[3]
+			curr["DM"] = line[4]
+			curr["Pb"] = line[5]
+			curr["x"] = line[6]
+			curr["e"] = line[7]
+			curr["m2"] = line[8]
+			curr["GC"] = currGC
+			if curr["Name"] in [x["Name"] for x in catalog["entries"]]:
+				entry = [x for x in catalog["entries"] if x["Name"] == curr["Name"]][0]
+				entry["sources"]["GCpsr"] = curr
+			else:
+				catalog["entries"].append({"Name":curr["Name"], "RA":"--", "DEC":"--", "visible":True, "sources":{"GCpsr":curr}})
+			line = file.readline()
+		else:
+			currGC = line
+			line = file.readline()
 
-	catalog["entries"].sort(key=lambda x: x["PSRJ"])
+	file.close()
+
+
+	catalog["entries"].sort(key=lambda x: x["Name"])
 	return catalog
