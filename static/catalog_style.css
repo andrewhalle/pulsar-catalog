@@ -9,10 +9,22 @@ body {
     text-align: center;
 }
 
-#search {
+#filter {
     padding: 0px;
     margin: 2vh 5vw 0px 5vw;
     width: 90vw;
+}
+
+#filter #search {
+    padding: 0px;
+    margin: 0px 2px 0px 0px;
+    width: 50vw;
+}
+
+#filter .source_check_text {
+    padding: 0px;
+    margin: 0px 3.5vw 0px 0px;
+    font-size: 1.2vw;
 }
 
 #table {

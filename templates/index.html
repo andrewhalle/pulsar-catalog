@@ -6,7 +6,13 @@
 </head>
 <body>
   <h1 id="title">Aggregate Pulsar Catalog</h1>
-  <input id="search" placeholder="Name" type="text">
+  <div id="filter">
+    <input id="search" placeholder="Name" type="text">
+    <input id="ATNF" class="source_check" type="checkbox"><span class="source_check_text">ATNF</span>
+    <input id="RRATalog" class="source_check" type="checkbox"><span class="source_check_text">RRATalog</span>
+    <input id="Parallaxes" class="source_check" type="checkbox"><span class="source_check_text">Parallaxes</span>
+    <input id="GCpsr" class="source_check" type="checkbox"><span class="source_check_text">GCpsr</span>
+  </div>
   <div id="table"></div>
   <div id="nav">
     <input id="prev" type="button" value="Previous">

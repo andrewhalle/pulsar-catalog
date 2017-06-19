@@ -7,6 +7,10 @@ function setup() {
 		success: setHTML
 	});
 	$("#search").keyup(filter);
+	$("#ATNF").change(filter);
+	$("#RRATalog").change(filter);
+	$("#Parallaxes").change(filter);
+	$("#GCpsr").change(filter);
 	$("#next").click(next);
 	$("#prev").click(prev);
 }
@@ -20,6 +24,7 @@ function setHTML(result) {
 }
 
 function filter() {
+	console.log("here");
 	var prestring = $("#search").val();
 	var numVisible = 0;
 	for (var i = 0; i < catalog.entries.length; i++) {
@@ -30,6 +35,30 @@ function filter() {
 			numVisible += 1;
 		} else {
 			curr.visible = false;
+		}
+		var sourceNames = [];
+		for (source of curr.sources) {
+			sourceNames.push(source.Name);
+		}
+		if ($("#ATNF").is(":checked")) {
+			if ($.inArray("ATNF", sourceNames) == -1) {
+				curr.visible = false;
+			}
+		}
+		if ($("#RRATalog").is(":checked")) {
+			if ($.inArray("RRATalog", sourceNames) == -1) {
+				curr.visible = false;
+			}
+		}
+		if ($("#Parallaxes").is(":checked")) {
+			if ($.inArray("Parallaxes", sourceNames) == -1) {
+				curr.visible = false;
+			}
+		}
+		if ($("#GCpsr").is(":checked")) {
+			if ($.inArray("GCpsr", sourceNames) == -1) {
+				curr.visible = false;
+			}
 		}
 	}
 	catalog.pages = Math.ceil(numVisible / catalog.entries_per_page);
