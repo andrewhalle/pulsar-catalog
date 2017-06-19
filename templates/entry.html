@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ pulsar.Name }}</title>
+</head>
+<body>
+	<h1>Name: {{ pulsar.Name }}</h1>
+	<h2>RA: {{ pulsar.RA }}</h2>
+	<h2>DEC: {{ pulsar.DEC }}</h2>
+	{% for source in pulsar.sources %}
+	<h3>{{ source.Name }}</h3>
+	{% for entry in source["data"] %}
+	<p>{{entry}}: {{source["data"][entry]}}</p>
+	{% endfor %}
+	{% endfor %}
+</body>
+</html>

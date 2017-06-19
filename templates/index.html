@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Aggregate Pulsar Catalog</title>
+  <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='catalog_style.css') }}>
+</head>
+<body>
+  <h1 id="title">Aggregate Pulsar Catalog</h1>
+  <input id="search" placeholder="Name" type="text">
+  <div id="table"></div>
+  <div id="nav">
+    <input id="prev" type="button" value="Previous">
+    <span id="pageinfo"></span>
+    <input id="next" type="button" value="Next">
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src={{ url_for('static', filename='events.js') }}></script>
+</body>
+</html>
