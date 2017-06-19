@@ -32,7 +32,6 @@ function filter() {
 		var smaller = Math.min(prestring.length, curr.Name.length);
 		if (curr.Name.slice(0, smaller) == prestring.slice(0, smaller)) {
 			curr.visible = true;
-			numVisible += 1;
 		} else {
 			curr.visible = false;
 		}
@@ -40,7 +39,7 @@ function filter() {
 		for (source of curr.sources) {
 			sourceNames.push(source.Name);
 		}
-		if ($("#ATNF").is(":checked")) {
+		if ($("#ATNF").is(":checked") && curr.visible) {
 			if ($.inArray("ATNF", sourceNames) == -1) {
 				curr.visible = false;
 			}
@@ -60,6 +59,12 @@ function filter() {
 				curr.visible = false;
 			}
 		}
+		if (curr.visible) {
+			numVisible += 1;
+		}
+	}
+	if (numVisible === 0) {
+		numVisible = 1;
 	}
 	catalog.pages = Math.ceil(numVisible / catalog.entries_per_page);
 	catalog.curr_page = 1;
@@ -97,10 +102,10 @@ function render(catalog) {
 		curr = catalog.entries[i];
 		if (curr.visible) {
 			var sourceNames = [];
-			for (source of curr.sources) {
+			for (var source of curr.sources) {
 				sourceNames.push(source.Name);
 			}
-			table += "<tr><td><a href=/entries/" + curr.Name.replace("/", "-") + ">" + curr.Name + "</a></td><td>" + curr.RA + "</td><td>" + curr.DEC + "</td><td>" + sourceNames.join() + "</td></tr>";
+			table += "<tr><td><a target=\"_blank\" href=/entries/" + curr.Name.replace("/", "-") + ">" + curr.Name + "</a></td><td>" + curr.RA + "</td><td>" + curr.DEC + "</td><td>" + sourceNames.join() + "</td></tr>";
 			entries_left -= 1;
 		}
 		i += 1;
