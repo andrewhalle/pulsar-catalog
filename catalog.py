@@ -3,6 +3,7 @@ from catalog_utils import gen_catalog
 import json
 
 app = Flask(__name__)
+cat = gen_catalog()
 
 @app.route("/")
 def index():
@@ -10,8 +11,6 @@ def index():
 
 @app.route("/gen_catalog")
 def initalize():
-	global cat
-	cat = gen_catalog()
 	return json.dumps(cat)
 
 @app.route("/entries/<pulsar_name>")
