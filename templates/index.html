@@ -3,6 +3,7 @@
 <head>
   <title>Aggregate Pulsar Catalog</title>
   <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='catalog_style.css') }}>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
   <h1 id="title">Aggregate Pulsar Catalog</h1>
@@ -20,10 +21,19 @@
     <input id="next" type="button" value="Next">
   </div>
   <div id="versioning">
-    <span id="ATNF_v"></span>
-    <span id="RRATalog_v"></span>
-    <span id="Parallaxes_v"></span>
-    <span id="GCpsr_v"></span>
+    <span id="ATNF_v" class="version-box">
+      <img src={{ url_for('static', filename='loading.gif') }}>
+      <span>Checking version info for ATNF...</span>
+    </span>
+    <span id="RRATalog_v" class="version-box">
+      
+    </span>
+    <span id="Parallaxes_v" class="version-box">
+      
+    </span>
+    <span id="GCpsr_v" class="version-box">
+      
+    </span>
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
   <script src={{ url_for('static', filename='main.js') }}></script>

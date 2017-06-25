@@ -6,14 +6,6 @@ function setup() {
 		url: "/gen_catalog",
 		success: setHTML
 	});
-	check_version();
-	$("#search").keyup(filter);
-	$("#ATNF").change(filter);
-	$("#RRATalog").change(filter);
-	$("#Parallaxes").change(filter);
-	$("#GCpsr").change(filter);
-	$("#next").click(next);
-	$("#prev").click(prev);
 }
 
 function check_version() {
@@ -25,6 +17,16 @@ function setHTML(result) {
 	catalog.entries_per_page = 10;
 	catalog.pages = Math.ceil(catalog.entries.length / catalog.entries_per_page);
 	catalog.curr_page = 1;
+
+	check_version();
+	$("#search").keyup(filter);
+	$("#ATNF").change(filter);
+	$("#RRATalog").change(filter);
+	$("#Parallaxes").change(filter);
+	$("#GCpsr").change(filter);
+	$("#next").click(next);
+	$("#prev").click(prev);
+
 	filter();
 }
 
@@ -120,5 +122,27 @@ function render(catalog) {
 }
 
 function check_atnf() {
-	$("#ATNF_v").html("Checking version info for ATNF...");
+	$.ajax({
+		url: "/versioning",
+		data: {
+			catalog: "ATNF"
+		},
+		success: function(response) {
+			localVersion = Number(catalog.versions.ATNF);
+			remoteVersion = Number(response);
+			console.log(remoteVersion);
+			if (localVersion < remoteVersion) {
+				//update
+			} else {
+				$.ajax({
+					url: "/render-version-box",
+					data: {
+						isCurrent: true,
+						catalog: "ATNF"
+					},
+					success: function(response) { $("#ATNF_v").html(response) }
+				});
+			}
+		}
+	});
 }

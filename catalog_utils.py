@@ -2,12 +2,14 @@ from collections import OrderedDict
 
 def gen_catalog():
 	#build catalog dictionary
-	catalog = {"entries":[]}
+	catalog = {"entries":[], "versions":{}}
 	entries = catalog["entries"]
+	versions = catalog["versions"]
 
 	#ATNF Pulsar Database
 	file = open("sources/psrcat.db", "r")
 	line = file.readline()
+	versions["ATNF"] = line.split()[1]
 	curr = None
 	while line:
 	    if line[0] == "#":

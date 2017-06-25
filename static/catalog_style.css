@@ -3,6 +3,10 @@ body {
     padding: 0px;
 }
 
+.version-box img {
+    width: 40px;
+}
+
 #title {
     margin: 2vh 0px 0px 0px;
     width: 100vw;
