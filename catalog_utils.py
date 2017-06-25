@@ -35,7 +35,7 @@ def gen_catalog():
 	while line:
 		line = line.split()
 		curr = OrderedDict()
-		curr["Name"] = line[0]
+		curr["Name"] = line[0].replace("*", "")
 		curr["P"] = line[1]
 		curr["Pdot"] = line[2]
 		curr["DM"] = line[3]
@@ -52,6 +52,9 @@ def gen_catalog():
 		curr["Survey"] = line[14]
 		if curr["Name"] in [x["Name"] for x in catalog["entries"]]:
 			entry = [x for x in catalog["entries"] if x["Name"] == curr["Name"]][0]
+			entry["sources"].append({"Name": "RRATalog", "data":curr})
+		elif curr["Name"][0:-2] in [x["Name"] for x in catalog["entries"]]:
+			entry = [x for x in catalog["entries"] if x["Name"] == curr["Name"][0:-2]][0]
 			entry["sources"].append({"Name": "RRATalog", "data":curr})
 		else:
 			catalog["entries"].append({"Name":curr["Name"], "RA":curr["RA"], "DEC":curr["DEC"], "visible":True, "sources":[{"Name":"RRATalog", "data":curr}]})
@@ -123,11 +126,30 @@ def gen_catalog():
 			curr["e"] = line[7]
 			curr["m2"] = line[8]
 			curr["GC"] = currGC
-			if curr["Name"] in [x["Name"] for x in catalog["entries"]]:
-				entry = [x for x in catalog["entries"] if x["Name"] == curr["Name"]][0]
-				entry["sources"].append({"Name":"GCpsr", "data":curr})
+			if curr["Name"][0] == "J":
+				if curr["Name"] in [x["Name"] for x in catalog["entries"]]:
+					entry = [x for x in catalog["entries"] if x["Name"] == curr["Name"]][0]
+					entry["sources"].append({"Name":"GCpsr", "data":curr})
+				else:
+					catalog["entries"].append({"Name":curr["Name"], "RA":"--", "DEC":"--", "visible":True, "sources":[{"Name":"GCpsr", "data":curr}]})
+			elif curr["Name"][0] == "B":
+				found = False
+				for entry in catalog["entries"]:
+					for source in entry["sources"]:
+						if source["Name"] == "ATNF":
+							if "PSRB" in source["data"]:
+								if source["data"]["PSRB"][0] == curr["Name"]:
+									entry["sources"].append({"Name":"GCpsr", "data":curr})
+									found = True
+									break
+					if found:
+						break
+				if not found:
+					catalog["entries"].append({"Name":curr["Name"], "RA":"--", "DEC":"--", "visible":True, "sources":[{"Name":"GCpsr", "data":curr}]})
 			else:
 				catalog["entries"].append({"Name":curr["Name"], "RA":"--", "DEC":"--", "visible":True, "sources":[{"Name":"GCpsr", "data":curr}]})
+
+
 			line = file.readline()
 		else:
 			currGC = line

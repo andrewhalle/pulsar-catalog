@@ -6,6 +6,7 @@ function setup() {
 		url: "/gen_catalog",
 		success: setHTML
 	});
+	check_version();
 	$("#search").keyup(filter);
 	$("#ATNF").change(filter);
 	$("#RRATalog").change(filter);
@@ -13,6 +14,10 @@ function setup() {
 	$("#GCpsr").change(filter);
 	$("#next").click(next);
 	$("#prev").click(prev);
+}
+
+function check_version() {
+	check_atnf();
 }
 
 function setHTML(result) {
@@ -24,7 +29,6 @@ function setHTML(result) {
 }
 
 function filter() {
-	console.log("here");
 	var prestring = $("#search").val();
 	var numVisible = 0;
 	for (var i = 0; i < catalog.entries.length; i++) {
@@ -113,4 +117,8 @@ function render(catalog) {
 	table += "</table>";
 	$("#table").html(table);
 	$("#pageinfo").html(catalog.curr_page.toString() + " of " + catalog.pages.toString());
+}
+
+function check_atnf() {
+	$("#ATNF_v").html("Checking version info for ATNF...");
 }
