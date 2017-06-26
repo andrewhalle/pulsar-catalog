@@ -10,6 +10,9 @@ function setup() {
 
 function check_version() {
 	check_atnf();
+	check_rratalog();
+	check_parallaxes();
+	check_gcpsr();
 }
 
 function setHTML(result) {
@@ -130,9 +133,15 @@ function check_atnf() {
 		success: function(response) {
 			localVersion = Number(catalog.versions.ATNF);
 			remoteVersion = Number(response);
-			console.log(remoteVersion);
 			if (localVersion < remoteVersion) {
-				//update
+				$.ajax({
+					url: "/render-version-box",
+					data: {
+						isCurrent: false,
+						catalog: "ATNF"
+					},
+					success: function(response) { $("#ATNF_v").html(response) }
+				});
 			} else {
 				$.ajax({
 					url: "/render-version-box",
@@ -141,6 +150,105 @@ function check_atnf() {
 						catalog: "ATNF"
 					},
 					success: function(response) { $("#ATNF_v").html(response) }
+				});
+			}
+		}
+	});
+}
+
+function check_rratalog() {
+	$.ajax({
+		url: "/versioning",
+		data: {
+			catalog: "RRATalog"
+		},
+		success: function(response) {
+			localVersion = Date.parse(catalog.versions.RRATalog);
+			remoteVersion = Date.parse(response);
+			if (localVersion < remoteVersion) {
+				$.ajax({
+					url: "/render-version-box",
+					data: {
+						isCurrent: false,
+						catalog: "RRATalog"
+					},
+					success: function(response) { $("#RRATalog_v").html(response) }
+				});
+			} else {
+				$.ajax({
+					url: "/render-version-box",
+					data: {
+						isCurrent: true,
+						catalog: "RRATalog"
+					},
+					success: function(response) { $("#RRATalog_v").html(response) }
+				});
+			}
+		}
+	});
+}
+
+function check_parallaxes() {
+	$.ajax({
+		url: "/versioning",
+		data: {
+			catalog: "Parallaxes"
+		},
+		success: function(response) {
+			var month = catalog.versions.Parallaxes.slice(4, 6);
+			var day = catalog.versions.Parallaxes.slice(6, 8);
+			var year = catalog.versions.Parallaxes.slice(0, 5);
+			localVersion = Date.parse(month + "-" + day + "-" + year);
+			remoteVersion = Date.parse(response);
+			if (localVersion < remoteVersion) {
+				$.ajax({
+					url: "/render-version-box",
+					data: {
+						isCurrent: false,
+						catalog: "Parallaxes"
+					},
+					success: function(response) { $("#Parallaxes_v").html(response) }
+				});
+			} else {
+				$.ajax({
+					url: "/render-version-box",
+					data: {
+						isCurrent: true,
+						catalog: "Parallaxes"
+					},
+					success: function(response) { $("#Parallaxes_v").html(response) }
+				});
+			}
+		}
+	});
+}
+
+function check_gcpsr() {
+	$.ajax({
+		url: "/versioning",
+		data: {
+			catalog: "GCpsr"
+		},
+		success: function(response) {
+			localVersion = Date.parse(catalog.versions.GCpsr);
+			remoteVersion = Date.parse(response);
+			if (localVersion < remoteVersion) {
+				$.ajax({
+					url: "/render-version-box",
+					data: {
+						isCurrent: false,
+						catalog: "GCpsr"
+					},
+					success: function(response) { $("#GCpsr_v").html(response) }
+				});
+			} else {
+				$.ajax({
+					url: "/render-version-box",
+					data: {
+						isCurrent: true,
+						catalog: "GCpsr"
+					},
+					success: function(response) { $("#GCpsr_v").html(response) }
 				});
 			}
 		}

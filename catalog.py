@@ -19,6 +19,12 @@ def versioning():
 	catalog = request.args["catalog"]
 	if catalog == "ATNF":
 		return get_ATNF_version()
+	elif catalog == "RRATalog":
+		return get_RRATalog_version()
+	elif catalog == "Parallaxes":
+		return get_Parallaxes_version()
+	elif catalog == "GCpsr":
+		return get_GCpsr_version()
 
 @app.route("/render-version-box", methods=["GET"])
 def render_version_box():
@@ -26,6 +32,8 @@ def render_version_box():
 	catalog = request.args["catalog"]
 	if is_curr:
 		return render_template("version-box.html", image="check.png", text=catalog+" is up-to-date.")
+	else:
+		return render_template("version-box.html", image="red_x.png", text=catalog+" is not up-to-date.")
 
 @app.route("/entries/<pulsar_name>")
 def get_entry(pulsar_name):

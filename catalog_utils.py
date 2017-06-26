@@ -34,6 +34,7 @@ def gen_catalog():
 	file = open("sources/rratalog.txt", "r")
 	line = file.readline()
 	line = file.readline()
+	versions["RRATalog"] = "June 25, 2017"
 	while line:
 		line = line.split()
 		curr = OrderedDict()
@@ -66,6 +67,9 @@ def gen_catalog():
 	#Parallaxes
 	file = open("sources/Parallaxes.txt", "r")
 	line = file.readline()
+	line = file.readline()
+	line = file.readline()
+	versions["Parallaxes"] = line.split()[-1]
 	curr = None
 	while line:
 		if line[0] == "#":
@@ -111,6 +115,7 @@ def gen_catalog():
 	file = open("sources/GCpsr.txt", "r")
 	line = file.readline()
 	currGC = None
+	versions["GCpsr"] = "June 25, 2017"
 	while line:
 		if line[0] == "#" or line == "\n":
 			line = file.readline()
