@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ pulsar.Name }}</title>
+  <title>{{ pulsar.Name }}</title>
+  <link rel="stylesheet" type="text/css" href={{ url_for('static', filename="entry_style.css") }}>
 </head>
 <body>
-	<h1>Name: {{ pulsar.Name }}</h1>
-	<h2>RA: {{ pulsar.RA }}</h2>
-	<h2>DEC: {{ pulsar.DEC }}</h2>
-	{% for source in pulsar.sources %}
-		<h3>{{ source.Name }}</h3>
-		{% for entry in source["data"] %}
-			{% if source.Name != "ATNF" %}
-				<p>{{entry}}: {{source["data"][entry]}}</p>
-			{% else %}
-				{% if source["data"][entry]|length == 1 %}
-					<p>{{ entry }}: {{ source["data"][entry][0] }}</p>
-				{% elif source["data"][entry]|length == 2 %}
-					<p>{{ entry }}: {{ source["data"][entry][0] }}, Reference: <a href={{"http://www.atnf.csiro.au/research/pulsar/psrcat/psrcat_ref.html#" + source["data"][entry][1]}}>{{ source["data"][entry][1] }}</a></p>
-				{% else %}
-					<p>{{ entry }}: {{ source["data"][entry][0] }}, Error: {{ source["data"][entry][1] }}, Reference: <a href={{"http://www.atnf.csiro.au/research/pulsar/psrcat/psrcat_ref.html#"+source["data"][entry][2]}}>{{ source["data"][entry][2] }}</a></p>
-				{% endif %}
-			{% endif %}
-		{% endfor %}
-	{% endfor %}
+  <div id="wrapper">
+  <div id="cover">
+    <img src={{ url_for('static', filename="cover.jpg") }}>
+    <h1>RTCat</h1>
+    <p>Your one stop, radio-transient shop!</p>
+  </div>
+
+  <h1>Name: {{ pulsar.Name }}</h1>
+  <h2>RA: {{ pulsar.RA }}</h2>
+  <h2>DEC: {{ pulsar.DEC }}</h2>
+  {% for source in pulsar.sources %}
+    <h3>{{ source.Name }}</h3>
+    {% for entry in source["data"] %}
+      {% if source.Name != "ATNF" %}
+        <p>{{entry}}: {{source["data"][entry]}}</p>
+      {% else %}
+        {% if source["data"][entry]|length == 1 %}
+          <p>{{ entry }}: {{ source["data"][entry][0] }}</p>
+        {% elif source["data"][entry]|length == 2 %}
+          <p>{{ entry }}: {{ source["data"][entry][0] }}, Reference: <a href={{"http://www.atnf.csiro.au/research/pulsar/psrcat/psrcat_ref.html#" + source["data"][entry][1]}}>{{ source["data"][entry][1] }}</a></p>
+        {% else %}
+          <p>{{ entry }}: {{ source["data"][entry][0] }}, Error: {{ source["data"][entry][1] }}, Reference: <a href={{"http://www.atnf.csiro.au/research/pulsar/psrcat/psrcat_ref.html#"+source["data"][entry][2]}}>{{ source["data"][entry][2] }}</a></p>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+
+  <footer>
+    <p>&copy; Andrew Halle 2017. Made with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>.</p>
+  </footer>
+  </div>
 </body>
 </html>

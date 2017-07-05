@@ -6,7 +6,12 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
-  <h1 id="title">Aggregate Pulsar Catalog</h1>
+  <div id="wrapper">
+  <div id="cover">
+    <img src={{ url_for('static', filename="cover.jpg") }}>
+    <h1>RTCat</h1>
+    <p>Your one stop, radio-transient shop!</p>
+  </div>
   <div id="filter">
     <input id="search" placeholder="Name" type="text">
     <input id="ATNF" class="source_check" type="checkbox"><span class="source_check_text">ATNF</span>
@@ -14,7 +19,7 @@
     <input id="Parallaxes" class="source_check" type="checkbox"><span class="source_check_text">Parallaxes</span>
     <input id="GCpsr" class="source_check" type="checkbox"><span class="source_check_text">GCpsr</span>
   </div>
-  <div id="table"></div>
+  <table id="table"></table>
   <div id="nav">
     <input id="prev" type="button" value="Previous">
     <span id="pageinfo"></span>
@@ -38,6 +43,27 @@
       <span>Checking version info for GCpsr...</span>
     </span>
   </div>
+  <div id="more-info">
+    <h2>Features</h2>
+    <ul>
+      <li>Aggregate data from multiple sources</li>
+      <li>Automatic versioning and regular updating</li>
+      <li>Responsive filtering</li>
+    </ul>
+    <h2>Attributions</h2>
+    <p>All data used in this catalog is aggregate data, compiled from various sources. As such, all data is owned by the original source.</p>
+    <ul>
+      <li>ATNF pulsar database - <a href="http://www.atnf.csiro.au/people/pulsar/psrcat/">http://www.atnf.csiro.au/people/pulsar/psrcat/</a></li>
+      <li>RRATalog - <a href="http://astro.phys.wvu.edu/rratalog/">http://astro.phys.wvu.edu/rratalog/</a></li>
+      <li>Parallaxes database - <a href="http://www.astro.cornell.edu/research/parallax/">http://www.astro.cornell.edu/research/parallax/</a></li>
+      <li>GCpsr catalog - <a href="http://www.naic.edu/~pfreire/GCpsr.html">http://www.naic.edu/~pfreire/GCpsr.html</a></li>
+    </ul>
+  </div>
+  <footer>
+    <p>&copy; Andrew Halle 2017. Made with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>.</p>
+  </footer>
+  </div>
+
   <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
   <script src={{ url_for('static', filename='main.js') }}></script>
 </body>

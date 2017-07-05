@@ -95,7 +95,7 @@ function prev() {
 }
 
 function render(catalog) {
-    var table = '<table style="padding: 0px;margin 2vh 5vw 0px 5vw; width: 90vw; text-align: center"><tr><th>Name</th><th>RA</th><th>DEC</th><th>Sources</th></tr>';
+    var table = '<tr><th>Name</th><th>RA</th><th>DEC</th><th>Sources</th></tr>';
 	var start_buffer = (catalog.curr_page - 1) * catalog.entries_per_page;
 	var entries_left = catalog.entries_per_page;
 	var i = 0;
@@ -114,12 +114,17 @@ function render(catalog) {
 			for (var source of curr.sources) {
 				sourceNames.push(source.Name);
 			}
-			table += "<tr><td><a target=\"_blank\" href=/entries/" + curr.Name.replace("/", "-") + ">" + curr.Name + "</a></td><td>" + curr.RA + "</td><td>" + curr.DEC + "</td><td>" + sourceNames.join() + "</td></tr>";
+			var classString;
+			if (entries_left % 2 == 0) {
+				classString = "light-grey-row"
+			} else {
+				classString = "light-blue-row"
+			}
+			table += "<tr class=\"" + classString + "\"><td><a target=\"_blank\" href=/entries/" + curr.Name.replace("/", "-") + ">" + curr.Name + "</a></td><td>" + curr.RA + "</td><td>" + curr.DEC + "</td><td>" + sourceNames.join() + "</td></tr>";
 			entries_left -= 1;
 		}
 		i += 1;
 	}
-	table += "</table>";
 	$("#table").html(table);
 	$("#pageinfo").html(catalog.curr_page.toString() + " of " + catalog.pages.toString());
 }
