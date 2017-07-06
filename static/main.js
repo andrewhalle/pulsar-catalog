@@ -13,6 +13,7 @@ function check_version() {
 	check_rratalog();
 	check_parallaxes();
 	check_gcpsr();
+	check_frbcat();
 }
 
 function setHTML(result) {
@@ -27,6 +28,7 @@ function setHTML(result) {
 	$("#RRATalog").change(filter);
 	$("#Parallaxes").change(filter);
 	$("#GCpsr").change(filter);
+	$("#frbcat").change(filter);
 	$("#next").click(next);
 	$("#prev").click(prev);
 
@@ -65,6 +67,11 @@ function filter() {
 		}
 		if ($("#GCpsr").is(":checked")) {
 			if ($.inArray("GCpsr", sourceNames) == -1) {
+				curr.visible = false;
+			}
+		}
+		if ($("#frbcat").is(":checked")) {
+			if ($.inArray("frbcat", sourceNames) == -1) {
 				curr.visible = false;
 			}
 		}
@@ -254,6 +261,38 @@ function check_gcpsr() {
 						catalog: "GCpsr"
 					},
 					success: function(response) { $("#GCpsr_v").html(response) }
+				});
+			}
+		}
+	});
+}
+
+function check_frbcat() {
+	$.ajax({
+		url: "/versioning",
+		data: {
+			catalog: "frbcat"
+		},
+		success: function(response) {
+			localVersion = parseFloat(catalog.versions.GCpsr);
+			remoteVersion = parseFloat(response);
+			if (localVersion < remoteVersion) {
+				$.ajax({
+					url: "/render-version-box",
+					data: {
+						isCurrent: false,
+						catalog: "frbcat"
+					},
+					success: function(response) { $("#frbcat_v").html(response) }
+				});
+			} else {
+				$.ajax({
+					url: "/render-version-box",
+					data: {
+						isCurrent: true,
+						catalog: "frbcat"
+					},
+					success: function(response) { $("#frbcat_v").html(response) }
 				});
 			}
 		}

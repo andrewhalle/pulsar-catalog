@@ -24,3 +24,9 @@ def get_GCpsr_version():
 	p = re.compile('<i> The present version of this page was last updated: (.+)</i>')
 	m = p.search(r.text)
 	return m.group(1).strip()
+
+def get_frbcat_version():
+	r = requests.get("http://www.astronomy.swin.edu.au/pulsar/frbcat/")
+	p = re.compile('<h2>Catalogue Version (.+)</h2>')
+	m = p.search(r.text)
+	return m.group(1).strip()

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from catalog_utils import gen_catalog
 from webcrawler import *
 import json
@@ -25,6 +25,8 @@ def versioning():
 		return get_Parallaxes_version()
 	elif catalog == "GCpsr":
 		return get_GCpsr_version()
+	elif catalog == "frbcat":
+		return get_frbcat_version()
 
 @app.route("/render-version-box", methods=["GET"])
 def render_version_box():
@@ -39,3 +41,7 @@ def render_version_box():
 def get_entry(pulsar_name):
 	pulsar = [p for p in cat["entries"] if p["Name"] == pulsar_name][0]
 	return render_template("entry.html", pulsar=pulsar)
+
+@app.route("/favicon.ico")
+def favicon():
+	return redirect(url_for('static', filename='favicon.ico'))

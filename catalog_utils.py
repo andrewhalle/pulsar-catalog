@@ -1,4 +1,6 @@
 from collections import OrderedDict
+from copy import deepcopy
+from csv import reader
 
 def gen_catalog():
 	#build catalog dictionary
@@ -82,9 +84,9 @@ def gen_catalog():
 			else:
 				if curr["JName"] in [x["Name"] for x in catalog["entries"]]:
 					entry = [x for x in catalog["entries"] if x["Name"] == curr["JName"]][0]
-					entry["sources"].append({"Name":"Parallaxes", "data":curr})
+					entry["sources"].append({"Name":"Parallaxes", "data":deepcopy(curr)})
 				else:
-					catalog["entries"].append({"Name":curr["JName"], "RA":"--", "DEC":"--", "visible":True, "sources":[{"Name":"Parallaxes", "data":curr}]})
+					catalog["entries"].append({"Name":curr["JName"], "RA":"--", "DEC":"--", "visible":True, "sources":[{"Name":"Parallaxes", "data":deepcopy(curr)}]})
 				line = file.readline()
 
 		else:
@@ -164,6 +166,21 @@ def gen_catalog():
 
 	file.close()
 
+	#frbcat
+	file = open("sources/frbcat_2017-07-06.csv")
+	lines = list(reader(file))
+	titles = lines[0]
+	versions["frbcat"] = "1.0"
+	for line in lines[1:]:
+		curr = OrderedDict()
+		for i in range(len(line)):
+			curr[titles[i]] = line[i]
+		if curr["Name"] in [x["Name"] for x in catalog["entries"]]:
+			entry = [x for x in catalog["entries"] if x["Name"] == curr["Name"]][0]
+			entry["sources"].append({"Name":"frbcat", "data":curr})
+		else:
+			catalog["entries"].append({"Name":curr["Name"], "RA":curr["RAJ"], "DEC":curr["DECJ"], "visible":True, "sources":[{"Name":"frbcat", "data":curr}]})
+	file.close()
 
 	catalog["entries"].sort(key=lambda x: x["Name"])
 	return catalog

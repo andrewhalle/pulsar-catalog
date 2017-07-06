@@ -18,6 +18,7 @@
     <input id="RRATalog" class="source_check" type="checkbox"><span class="source_check_text">RRATalog</span>
     <input id="Parallaxes" class="source_check" type="checkbox"><span class="source_check_text">Parallaxes</span>
     <input id="GCpsr" class="source_check" type="checkbox"><span class="source_check_text">GCpsr</span>
+    <input id="frbcat" class="source_check" type="checkbox"><span class="source_check_text">frbcat</span>
   </div>
   <table id="table"></table>
   <div id="nav">
@@ -41,6 +42,10 @@
     <span id="GCpsr_v" class="version-box">
       <img src={{ url_for('static', filename='loading.gif') }}>
       <span>Checking version info for GCpsr...</span>
+    </span>
+    <span id="frbcat_v" class="version-box">
+      <img src={{ url_for('static', filename='loading.gif') }}>
+      <span>Checking version info for frbcat...</span>
     </span>
   </div>
   <div id="more-info">
