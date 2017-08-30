@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>{{ pulsar.Name }}</title>
-  <link rel="stylesheet" type="text/css" href={{ url_for('static', filename="entry_style.css") }}>
-</head>
-<body>
-  <div id="wrapper">
-  <div id="cover">
-    <img src={{ url_for('static', filename="cover.jpg") }}>
-    <h1>RTCat</h1>
-    <p>Your one stop, radio-transient shop!</p>
-  </div>
-
+{% extends "layout.html" %}
+{% block body %}
   <h1>Name: {{ pulsar.Name }}</h1>
   <h2>RA: {{ pulsar.RA }}</h2>
   <h2>DEC: {{ pulsar.DEC }}</h2>
@@ -32,9 +20,4 @@
     {% endfor %}
   {% endfor %}
 
-  <footer>
-    <p>&copy; Andrew Halle 2017. Made with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>.</p>
-  </footer>
-  </div>
-</body>
-</html>
+{% endblock %}

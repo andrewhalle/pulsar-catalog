@@ -8,7 +8,8 @@ cat = gen_catalog()
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+	page_title = "Aggregate Pulsar Catalog"
+	return render_template("index.html", page_title=page_title)
 
 @app.route("/gen_catalog")
 def initalize():
@@ -40,7 +41,8 @@ def render_version_box():
 @app.route("/entries/<pulsar_name>")
 def get_entry(pulsar_name):
 	pulsar = [p for p in cat["entries"] if p["Name"] == pulsar_name][0]
-	return render_template("entry.html", pulsar=pulsar)
+	page_title = pulsar["Name"]
+	return render_template("entry.html", pulsar=pulsar, page_title=page_title)
 
 @app.route("/favicon.ico")
 def favicon():
