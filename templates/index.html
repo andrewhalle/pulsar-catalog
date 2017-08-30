@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Aggregate Pulsar Catalog</title>
-  <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='catalog_style.css') }}>
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-</head>
-<body>
-  <div id="wrapper">
-  <div id="cover">
-    <img src={{ url_for('static', filename="cover.jpg") }}>
-    <h1>RTCat</h1>
-    <p>Your one stop, radio-transient shop!</p>
-  </div>
+{% extends "layout.html" %}
+{% block body %}
+  <h2>RTCat</h2>
   <div id="filter">
     <input id="search" placeholder="Name" type="text">
     <input id="ATNF" class="source_check" type="checkbox"><span class="source_check_text">ATNF</span>
@@ -65,12 +54,7 @@
       <li>frbcat catalog - <a href="http://www.astronomy.swin.edu.au/pulsar/frbcat/">http://www.astronomy.swin.edu.au/pulsar/frbcat/</a></li>
     </ul>
   </div>
-  <footer>
-    <p>&copy; Andrew Halle 2017. Made with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>.</p>
-  </footer>
-  </div>
 
   <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
   <script src={{ url_for('static', filename='main.js') }}></script>
-</body>
-</html>
+{% endblock %}
